@@ -1,4 +1,10 @@
+#force.com IDE
 .project
 .settings
 salesforce.schema
 Referenced Packages
+
+#mavensmate
+config/
+*.sublime-project
+*.sublime-workspace
