@@ -58,21 +58,12 @@ public with sharing class ExplainQueryController {
       
         // check if we had an error
         if (statusCode != 200) {
-            JSONParser parser = JSON.createParser(retJSON);
-            String err = '';
-            while (parser.nextToken() != null) {
-                if (parser.getCurrentToken() == JSONToken.FIELD_NAME) { 
-                    text = parser.getText();
-                    parser.nextToken();
-                    
-                    if ((text == 'message') || (text == 'errorCode')) {
-                        text = parser.getText();
-                        err += ' ' + text;
-                    }
-                }
+            for(ExplainErrorResponse error : (List<ExplainErrorResponse>) JSON.deserialize(retJSON, List<ExplainErrorResponse>.class)){ 
+                String err = error.errorCode +' '+ error.message;
+                
+                ApexPages.Message msg = new ApexPages.Message(ApexPages.Severity.ERROR, status + ' - ' + err);
+                ApexPages.addMessage(msg);
             }
-            ApexPages.Message msg = new ApexPages.Message(ApexPages.Severity.ERROR, status + ' - ' + err);
-            ApexPages.addMessage(msg);
         }
         else {           
             ExplainResponse response = (ExplainResponse) JSON.deserialize(retJSON, ExplainResponse.class);
@@ -80,6 +71,11 @@ public with sharing class ExplainQueryController {
         }    
                
         return null;
+    }
+
+    public class ExplainErrorResponse{
+        String errorCode {get; set;}
+        String message {get; set;}
     }
     
     public class ExplainResponse{
