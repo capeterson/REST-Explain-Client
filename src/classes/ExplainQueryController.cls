@@ -6,7 +6,7 @@ public with sharing class ExplainQueryController {
     transient public String explain { get; set; }
     transient public String error { get; set; }
     
-    public List<Plan> indexes { get; set; }
+    public List<Plan> plans { get; set; }
 
     //determine what URL prefix we're removing, c for unmanaged, soql-explain for managed.
     private static String currentPrefix{
@@ -53,7 +53,7 @@ public with sharing class ExplainQueryController {
         Integer statusCode = res.getStatusCode();
         retJSON = res.getBody();
         
-        indexes = new List<Plan>();
+        plans = new List<Plan>();
         String text = '';
       
         // check if we had an error
@@ -67,7 +67,7 @@ public with sharing class ExplainQueryController {
         }
         else {           
             ExplainResponse response = (ExplainResponse) JSON.deserialize(retJSON, ExplainResponse.class);
-            indexes = response.plans;     
+            plans = response.plans;     
         }    
                
         return null;

@@ -7,7 +7,7 @@
          </apex:pageBlock>
          <apex:pageBlock title="Indexes"  id="table"> <p/>
              <apex:outputText value="Query optimizer chose the first index in the list below." /> <p/>
-             <apex:pageBlockTable value="{!indexes}" var="ind">
+             <apex:pageBlockTable value="{!plans}" var="ind">
                  <apex:column value="{!ind.leadingOperationType}" headerValue="Leading operation type"/>
                  <apex:column value="{!ind.SObjectType}" headerValue="sObject type"/>
                  <apex:column headerValue="Fields">
