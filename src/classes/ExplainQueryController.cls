@@ -71,8 +71,8 @@ public with sharing class ExplainQueryController {
                     }
                 }
             }
-            MyException e = new MyException(status + ' - ' + err);
-            ApexPages.addMessages(e);
+            ApexPages.Message msg = new ApexPages.Message(ApexPages.Severity.ERROR, status + ' - ' + err);
+            ApexPages.addMessage(msg);
         }
         else {           
             ExplainResponse response = (ExplainResponse) JSON.deserialize(retJSON, ExplainResponse.class);
@@ -94,7 +94,5 @@ public with sharing class ExplainQueryController {
         public Double sObjectCardinality { get; set; }
         public String sObjectType { get; set;}
     }
-    
-    public class MyException extends Exception {}
-    
+        
 }
