@@ -18,6 +18,10 @@
     </types>
     <types>
         <members>*</members>
+        <name>CustomTab</name>
+    </types>
+    <types>
+        <members>*</members>
         <name>StaticResource</name>
     </types>
     <version>30.0</version>
