@@ -7,22 +7,35 @@ public with sharing class ExplainQueryController {
     transient public String error { get; set; }
     
     public List<cIndex> indexes { get; set; }
+
+    //determine what URL prefix we're removing, c for unmanaged, soql-explain for managed.
+    private static String currentPrefix{
+        get{
+            String prefix = ExplainQueryController.class.getName().substringBefore('ExplainQueryController');
+            if(prefix.endsWith('.'))
+                prefix = prefix.removeEnd('.');
+            if(String.isEmpty(prefix)){
+                return 'c';
+            }else{
+                return prefix.replaceAll('_','-'); //underscores in namespaces are converted to hypens in domain names
+            }
+        }
+    }
     
+    //visualforce domains aren't API-enabled, so we need to figure out what the proper endpoint
     public ExplainQueryController() {
         // retrieve the instance used to create endpoint URL
         instance = URL.getSalesforceBaseUrl().getHost();
         
         // check for my domain
-        if (instance.contains('--c.') && !instance.startsWith('c.')) {
-            instance = instance.substring(0, instance.indexOf('--c.')) + '.my.salesforce.com';
+        if (instance.contains('--'+currentPrefix+'.') && !instance.startsWith(currentPrefix+'.')) {
+            instance = instance.substring(0, instance.indexOf('--'+currentPrefix+'.')) + '.my.salesforce.com';
         }
         else {
             // strip out the starting 'c.' values
-            instance = instance.substring(2);
-            
+            instance = instance.removeStart(currentPrefix+'.');
             instance = instance.replace('.visual.force.com', '.salesforce.com');
         }
-        
         instance = 'https://' + instance;
     }    
     
