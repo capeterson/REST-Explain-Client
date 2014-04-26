@@ -1,4 +1,4 @@
-public with sharing class REST_QueryOptimizerController {
+public with sharing class ExplainQueryController {
 
     private String instance;
     transient public String soql { get; set; }
@@ -8,7 +8,7 @@ public with sharing class REST_QueryOptimizerController {
     
     public List<cIndex> indexes { get; set; }
     
-    public REST_QueryOptimizerController() {
+    public ExplainQueryController() {
         // retrieve the instance used to create endpoint URL
         instance = URL.getSalesforceBaseUrl().getHost();
         

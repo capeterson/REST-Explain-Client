@@ -1,4 +1,4 @@
-<apex:page controller="REST_QueryOptimizerController" sidebar="false">
+<apex:page controller="ExplainQueryController" sidebar="false">
      <apex:form >
          <apex:pageBlock title="Query" id="query">
              <apex:pageMessages />
