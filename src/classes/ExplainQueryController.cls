@@ -44,7 +44,7 @@ public with sharing class ExplainQueryController {
         req.setHeader('Authorization','Bearer ' + UserInfo.getSessionID());
         req.setHeader('Content-Type','application/json');
         
-        req.setEndpoint(instance + '/services/data/v30.0/query/?explain=' + EncodingUtil.urlEncode(soql, 'UTF-8'));
+        req.setEndpoint(instance + '/services/data/v33.0/query/?explain=' + EncodingUtil.urlEncode(soql, 'UTF-8'));
         req.setMethod('GET');
         
         Http h = new Http();
