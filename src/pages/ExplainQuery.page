@@ -30,6 +30,23 @@
 					<apex:param value="{!ind.relativeCost}" />
 				</apex:outputText>
 			</apex:column>
+			<apex:column>
+				<apex:facet name="header">
+					Optimizer Notes
+				</apex:facet>
+				<apex:pageBlockTable value="{!ind.notes}" var="note">
+					<apex:column value="{!note.description}">
+						<apex:facet name="header">Description</apex:facet>
+					</apex:column>
+					<apex:column value="{!note.tableEnumOrId}">
+						<apex:facet name="header">Table (Enum or Id)</apex:facet>
+					</apex:column>
+					<apex:column>
+						<apex:facet name="header">Fields</apex:facet>
+						<apex:outputText value="{!note.csvFields}" />
+					</apex:column>
+				</apex:pageBlockTable>
+			</apex:column>
 		</apex:pageBlockTable>
 	</apex:pageBlock>
 </apex:form>

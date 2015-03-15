@@ -81,6 +81,15 @@ public with sharing class ExplainQueryController {
     public class ExplainResponse{
         public List<Plan> plans {get; set;}
     }
+    public class PlanNote{
+        public String description { get; set; }
+        public List<String> fields { get; set; }
+        public String tableEnumOrId { get; set;}
+
+        public String getCSVFields(){
+            return String.join(fields, ',');
+        }
+    }
     
     public class Plan {
         public Double cardinality { get; set; }
@@ -89,6 +98,7 @@ public with sharing class ExplainQueryController {
         public Double relativeCost { get; set; }
         public Double sObjectCardinality { get; set; }
         public String sObjectType { get; set;}
+        public List<PlanNote> notes {get; set;}
     }
         
 }
