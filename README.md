@@ -1,6 +1,11 @@
 REST-Explain-Client
 ===================
 
+<a href="https://githubsfdeploy.herokuapp.com?owner=capeterson&repo=REST-Explain-Client">
+  <img alt="Deploy to Salesforce"
+       src="https://raw.githubusercontent.com/afawcett/githubsfdeploy/master/src/main/webapp/resources/img/deploy.png">
+</a>
+
 A simple apex and visualforce based client for the [SOQL Explain API pilot](http://www.salesforce.com/us/developer/docs/api_rest/Content/dome_query_explain.htm).
 
 Before use, regardless of how you install this, you must create a remote site setting under Setup | Security Controls | Remote Site Settings for the URL of your instance. For example https://na10.salesforce.com or https://something.my.salesforce.com
