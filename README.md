@@ -10,7 +10,7 @@ A simple apex and visualforce based client for the [SOQL Explain API pilot](http
 
 Before use, regardless of how you install this, you must create a remote site setting under Setup | Security Controls | Remote Site Settings for the URL of your instance. For example https://na10.salesforce.com or https://something.my.salesforce.com
 
-Is it available as a managed package, installable from this link: https://login.salesforce.com/packaging/installPackage.apexp?p0=04tF0000000FjCv
+Is it available as a managed package, installable from this link: https://login.salesforce.com/packaging/installPackage.apexp?p0=04tF0000000FjD0
 
 If you decide to use this code unmanged you can deploy it via a useful [web-based deployment tool Andrew Fawcett wrote](https://github.com/afawcett/githubsfdeploy) or via any other metadata API tools, like the Force.com IDE or MavensMate.
 
