@@ -87,7 +87,7 @@ public with sharing class ExplainQueryController {
         public String tableEnumOrId { get; set;}
 
         public String getCSVFields(){
-            return String.join(fields, ',');
+            return String.join(fields, ', ');
         }
     }
     
