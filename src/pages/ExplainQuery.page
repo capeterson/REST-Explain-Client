@@ -1,36 +1,36 @@
 <apex:page controller="ExplainQueryController" sidebar="false">
-     <apex:form >
-         <apex:pageBlock title="Query" id="query">
-             <apex:pageMessages />
-             <apex:InputTextarea value="{!soql}"  cols="80" rows="10" /> <p/>
-             <apex:commandButton action="{!showExplainPlan}" reRender="query,table" value="Explain"/>
-         </apex:pageBlock>
-         <apex:pageBlock title="Indexes"  id="table"> <p/>
-             <apex:outputText value="Query optimizer chose the first index in the list below." /> <p/>
-             <apex:pageBlockTable value="{!plans}" var="ind">
-                 <apex:column value="{!ind.leadingOperationType}" headerValue="Leading operation type"/>
-                 <apex:column value="{!ind.SObjectType}" headerValue="sObject type"/>
-                 <apex:column headerValue="Fields">
-                     <apex:repeat value="{!ind.Fields}" var="fld">
-                         <apex:outputText value="{!fld}" />
-                     </apex:repeat>
-                 </apex:column>
-                 <apex:column headervalue="Cardinality">
-                     <apex:outputText value="{0, number,###,###,###}">
-                         <apex:param value="{!ind.Cardinality}" />
-                     </apex:outputText>
-                 </apex:column>
-                 <apex:column headervalue="sObject cardinality">
-                     <apex:outputText value="{0, number,###,###,###}">
-                         <apex:param value="{!ind.SObjectCardinality}" />
-                     </apex:outputText>
-                 </apex:column>
-                 <apex:column headervalue="Relative cost">
-                     <apex:outputText value="{0, number,###,###,##0.000}">
-                         <apex:param value="{!ind.relativeCost}" />
-                     </apex:outputText>
-                 </apex:column>
-             </apex:pageBlockTable>
-         </apex:pageBlock>
-     </apex:form>
+	<apex:form >
+		<apex:pageBlock title="Query" id="query">
+			<apex:pageMessages />
+			<apex:InputTextarea value="{!soql}"  cols="80" rows="10" /> <p/>
+			<apex:commandButton action="{!showExplainPlan}" reRender="query,table" value="Explain"/>
+		</apex:pageBlock>
+		<apex:pageBlock title="Indexes"  id="table"> <p/>
+		<apex:outputText value="Query optimizer chose the first index in the list below." /> <p/>
+		<apex:pageBlockTable value="{!plans}" var="ind">
+			<apex:column value="{!ind.leadingOperationType}" headerValue="Leading operation type"/>
+			<apex:column value="{!ind.SObjectType}" headerValue="sObject type"/>
+			<apex:column headerValue="Fields">
+				<apex:repeat value="{!ind.Fields}" var="fld">
+					<apex:outputText value="{!fld}" />
+				</apex:repeat>
+			</apex:column>
+			<apex:column headervalue="Cardinality">
+				<apex:outputText value="{0, number,###,###,###}">
+					<apex:param value="{!ind.Cardinality}" />
+				</apex:outputText>
+			</apex:column>
+			<apex:column headervalue="sObject cardinality">
+				<apex:outputText value="{0, number,###,###,###}">
+					<apex:param value="{!ind.SObjectCardinality}" />
+				</apex:outputText>
+			</apex:column>
+			<apex:column headervalue="Relative cost">
+				<apex:outputText value="{0, number,###,###,##0.000}">
+					<apex:param value="{!ind.relativeCost}" />
+				</apex:outputText>
+			</apex:column>
+		</apex:pageBlockTable>
+	</apex:pageBlock>
+</apex:form>
 </apex:page>
