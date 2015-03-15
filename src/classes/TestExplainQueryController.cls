@@ -7,7 +7,7 @@ private class TestExplainQueryController {
 			HTTPResponse res = new HTTPResponse();
 			res.setHeader('Content-Type', 'application/json');
 			res.setBody(
-				'{"plans":[{"cardinality":26,"fields":[],"leadingOperationType":"TableScan","relativeCost":2.4333333333333336,"sobjectCardinality":26,"sobjectType":"Case"}]}'
+				'{"plans":[{"cardinality":0,"fields":[],"leadingOperationType":"TableScan","notes":[{"description":"Not considering filter for optimization because unindexed","fields":["IsDeleted","FakeField"],"tableEnumOrId":"Contact"},{"description":"Not considering filter for optimization because unindexed","fields":["Title"],"tableEnumOrId":"Contact"}],"relativeCost":0.6666666666666666,"sobjectCardinality":20,"sobjectType":"Contact"},{"cardinality":0,"fields":[],"leadingOperationType":"Other","notes":[{"description":"Not considering filter for optimization because unindexed","fields":["IsDeleted"],"tableEnumOrId":"Contact"},{"description":"Not considering filter for optimization because unindexed","fields":["Title"],"tableEnumOrId":"Contact"}],"relativeCost":0.6666666666666666,"sobjectCardinality":20,"sobjectType":"Contact"}]}'
 			);
 			res.setStatusCode(200);
 			return res;
@@ -25,14 +25,15 @@ private class TestExplainQueryController {
 	}
 	
 	@isTest
-	static void explainCaseTableScan(){
+	static void explainContactTableScan(){
 		Test.setCurrentPage(Page.ExplainQuery);
 		Test.setMock(HTTPCalloutMock.class, new ExplainSuccessMock());
 		ExplainQueryController con = new ExplainQueryController();
-		con.soql = 'SELECT id FROM Case';
+		con.soql = 'SELECT id, name FROM Contact WHERE Title = \'VP, Facilities\' ORDER BY Id LIMIT 10';
 		con.showExplainPlan();
 
-		System.assertEquals(1, con.plans.size());
+		System.assertEquals(2, con.plans.size());
+		System.assertEquals('IsDeleted, FakeField', con.plans[0].notes[0].getCSVFields());
 		System.assertEquals('TableScan', con.plans[0].leadingOperationType);
 	}
 
