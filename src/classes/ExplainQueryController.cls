@@ -7,6 +7,12 @@ public with sharing class ExplainQueryController {
     transient public String error { get; set; }
     
     public List<Plan> plans { get; set; }
+    public Plan getLeadingPlan(){
+        if(plans == null || plans.isEmpty())
+            return null;
+        else
+            return plans[0];
+    }
 
     //determine what URL prefix we're removing, c for unmanaged, soql-explain for managed.
     private static String currentPrefix{
@@ -22,8 +28,9 @@ public with sharing class ExplainQueryController {
         }
     }
     
-    //visualforce domains aren't API-enabled, so we need to figure out what the proper endpoint
+    
     public ExplainQueryController() {
+        //visualforce domains aren't API-enabled, so we need to figure out what the proper endpoint
         // retrieve the instance used to create endpoint URL
         instance = URL.getSalesforceBaseUrl().getHost();
         

@@ -3,8 +3,20 @@
 		<apex:pageBlock title="Query" id="query">
 			<apex:pageMessages />
 			<apex:InputTextarea value="{!soql}"  cols="80" rows="10" /> <p/>
-			<apex:commandButton action="{!showExplainPlan}" reRender="query,table" value="Explain"/>
+			<apex:commandButton action="{!showExplainPlan}" reRender="query,notes,table" value="Explain"/>
 		</apex:pageBlock>
+		<apex:pageBlock title="Notes"  id="notes"> <p/>
+             <apex:outputText value="Additional information for the chosen leading operation type" /> <p/>
+             <apex:pageBlockTable value="{!leadingPlan.notes}" var="note">
+                 <apex:column value="{!note.tableEnumOrId}" headerValue="sObject type"/>
+                 <apex:column headerValue="Fields">
+                     <apex:repeat value="{!note.Fields}" var="fld">
+                         <apex:outputText value="{!fld}" />
+                     </apex:repeat>
+                 </apex:column>
+                 <apex:column value="{!note.Description}" headerValue="Description"/>
+            </apex:pageBlockTable>
+        </apex:pageBlock>
 		<apex:pageBlock title="Indexes"  id="table"> <p/>
 		<apex:outputText value="Query optimizer chose the first index in the list below." /> <p/>
 		<apex:pageBlockTable value="{!plans}" var="ind">
@@ -29,23 +41,6 @@
 				<apex:outputText value="{0, number,###,###,##0.000}">
 					<apex:param value="{!ind.relativeCost}" />
 				</apex:outputText>
-			</apex:column>
-			<apex:column>
-				<apex:facet name="header">
-					Optimizer Notes
-				</apex:facet>
-				<apex:pageBlockTable value="{!ind.notes}" var="note">
-					<apex:column value="{!note.description}">
-						<apex:facet name="header">Description</apex:facet>
-					</apex:column>
-					<apex:column value="{!note.tableEnumOrId}">
-						<apex:facet name="header">Table (Enum or Id)</apex:facet>
-					</apex:column>
-					<apex:column>
-						<apex:facet name="header">Fields</apex:facet>
-						<apex:outputText value="{!note.csvFields}" />
-					</apex:column>
-				</apex:pageBlockTable>
 			</apex:column>
 		</apex:pageBlockTable>
 	</apex:pageBlock>
