@@ -48,4 +48,20 @@ private class TestExplainQueryController {
 		System.assertEquals(0, con.plans.size());
 		System.assertEquals(true, ApexPages.hasMessages(ApexPages.Severity.Error), 'No errors processed from response');
 	}
+
+	@isTest
+	static void deriveAPIEndpoint(){
+		Map<String,String> hostStyles = new Map<String,String>{
+			'mydomain--sandboxname--ns.cs0.visual.force.com' => 'https://mydomain--sandboxname.cs0.my.salesforce.com',
+			'ns.na15.visual.force.com' => 'https://na15.salesforce.com',
+			'mydomain--ns.na13.visual.force.com' => 'https://mydomain.na13.my.salesforce.com' //the pod in the URL doesn't seem to do any harm, and further complicates parsing logic to remove
+		};
+		ExplainQueryController.currentPrefix = 'ns';
+		for(String vfUrl: hostStyles.keySet()){
+			System.assertEquals(
+				hostStyles.get(vfUrl),
+				ExplainQueryController.deriveAPIEndpoint(vfUrl)
+			);
+		}
+	}
 }

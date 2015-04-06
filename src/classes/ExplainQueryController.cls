@@ -15,36 +15,50 @@ public with sharing class ExplainQueryController {
     }
 
     //determine what URL prefix we're removing, c for unmanaged, soql-explain for managed.
+    @testVisible
     private static String currentPrefix{
         get{
-            String prefix = ExplainQueryController.class.getName().substringBefore('ExplainQueryController');
-            if(prefix.endsWith('.'))
-                prefix = prefix.removeEnd('.');
-            if(String.isEmpty(prefix)){
-                return 'c';
-            }else{
-                return prefix.replaceAll('_','-'); //underscores in namespaces are converted to hypens in domain names
+            if(currentPrefix == null){
+                String prefix = ExplainQueryController.class.getName().substringBefore('ExplainQueryController');
+                if(prefix.endsWith('.'))
+                    prefix = prefix.removeEnd('.');
+                if(String.isEmpty(prefix)){
+                    return 'c';
+                }else{
+                    return prefix.replaceAll('_','-'); //underscores in namespaces are converted to hypens in domain names
+                }
             }
+            return currentPrefix;
         }
+        set; //you really shouldn't set this unless it's for unit tests!
     }
     
     
     public ExplainQueryController() {
-        //visualforce domains aren't API-enabled, so we need to figure out what the proper endpoint
-        // retrieve the instance used to create endpoint URL
-        instance = URL.getSalesforceBaseUrl().getHost();
-        
+        //getting the API-enabled endpoint from a vf page URL is suprisingly tricky
+        instance = deriveAPIEndpoint(URL.getSalesforceBaseUrl().getHost());
+    }  
+
+    /**
+     * visualforce domains aren't API-enabled, so we need to figure out what the proper endpoint
+     * retrieve the instance used to create endpoint URL
+    **/
+    @testVisible
+    private static String deriveAPIEndpoint(String instance){
+        String result;
         // check for my domain
         if (instance.contains('--'+currentPrefix+'.') && !instance.startsWith(currentPrefix+'.')) {
-            instance = instance.substring(0, instance.indexOf('--'+currentPrefix+'.')) + '.my.salesforce.com';
-        }
-        else {
+            // 1st remove the prefix and then add in the my.salesforce.com domain
+              instance = instance.replace('--'+currentPrefix+'.', '.');
+              instance = instance.replace('.visual.force.com', '.my.salesforce.com');
+        }else {
             // strip out the starting 'c.' values
             instance = instance.removeStart(currentPrefix+'.');
             instance = instance.replace('.visual.force.com', '.salesforce.com');
         }
-        instance = 'https://' + instance;
-    }    
+        result = 'https://' + instance;
+        return result;
+    }  
     
     public PageReference showExplainPlan() {
         HTTPRequest req = new HTTPRequest();
