@@ -8,6 +8,8 @@ REST-Explain-Client
 
 A simple apex and visualforce based client for the [SOQL Explain API pilot](http://www.salesforce.com/us/developer/docs/api_rest/Content/dome_query_explain.htm).
 
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
+
 ####All of the functionality of this tool is currently supported in the developer console
 But must be opted into via the Help > Preferences > Enable Query Plan option. You can then get query plan results in the "Query Editor" tab at the bottom of the console. __This is in most cases the developer console is a superior option to this tool__.
 
